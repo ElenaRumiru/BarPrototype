@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прототип механики бара - Финальный визуал</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-area">
+        <div id="shift-timer-display">--:--</div>
+        <div class="sofa-area">
+            <div class="sofa-row">
+                <div id="sofa-1" class="sofa">Диван 1</div>
+                <div id="sofa-2" class="sofa">Диван 2</div>
+                <div id="sofa-3" class="sofa">Диван 3</div>
+            </div>
+            <div class="sofa-row">
+                <div id="sofa-4" class="sofa">Диван 4</div>
+                <div id="sofa-5" class="sofa">Диван 5</div>
+            </div>
+        </div>
+        <div class="game-controls">
+            <div class="button-group">
+                <h3>Удержание гостя</h3>
+                <button id="retain-guest-btn" disabled>
+                    ⏰
+                    <div class="prep-overlay"></div>
+                    <div class="cooldown-overlay"></div>
+                    <span class="cooldown-timer"></span>
+                </button>
+            </div>
+            
+            <div class="horizontal-button-groups">
+                <div class="button-group">
+                    <h3>Социальные навыки</h3>
+                    <div class="social-buttons">
+                        <button class="social-btn" data-social-type="heart">❤️</button>
+                        <button class="social-btn" data-social-type="chat">💬</button>
+                        <button class="social-btn" data-social-type="fun">🔥</button>
+                    </div>
+                </div>
+                <div class="button-group">
+                    <h3>Заказы бара</h3>
+                    <div class="order-buttons">
+                        <button class="order-btn" data-order-type="drink-red">🍷<div class="prep-overlay"></div></button>
+                        <button class="order-btn" data-order-type="drink-blue">🍹<div class="prep-overlay"></div></button>
+                        <button class="order-btn" data-order-type="drink-green">🍸<div class="prep-overlay"></div></button>
+                        <button class="order-btn" data-order-type="drink-yellow">🍺<div class="prep-overlay"></div></button>
+                    </div>
+                </div>
+            </div>
+            
+            <button id="start-button">Начать смену</button>
+            
+            <div class="score">
+                <h3>Заработано: <span id="earnings-counter">0</span> $</h3>
+                <h3>Гостей обслужено: <span id="guests-served-counter">0</span></h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="config-panel">
+        <div class="panel-columns">
+            <div class="column">
+                <h3>Баланс смены</h3>
+                <div class="settings-grid">
+                    <div class="setting-item"><label for="shift-time">Время смены (сек):</label><input type="number" id="shift-time" value="120" min="30"></div>
+                    <div class="setting-item"><label for="new-guest-delay">Задержка н. гостя (сек):</label><input type="number" id="new-guest-delay" value="3" min="0"></div>
+                    <div class="setting-item"><label for="social-request-time">Таймер соц. запроса (сек):</label><input type="number" id="social-request-time" value="20" min="5"></div>
+                    <div class="setting-item"><label for="order-time">Время на заказ (сек):</label><input type="number" id="order-time" value="15" min="5"></div>
+                    <div class="setting-item"><label for="fail-penalty-time">Штраф за провал (сек):</label><input type="number" id="fail-penalty-time" value="10" min="0"></div>
+                    <div class="setting-item"><label for="min-orders">Мин. заказов бара:</label><input type="number" id="min-orders" value="2" min="1"></div>
+                    <div class="setting-item"><label for="max-orders">Макс. заказов бара:</label><input type="number" id="max-orders" value="2" min="1"></div>
+                    <div class="setting-item"><label>КД появления заказов (сек):</label><input type="number" id="global-cooldown" value="2" min="0"></div>
+                    <div class="setting-item"><label>КД заказа у гостя (сек):</label><input type="number" id="guest-cooldown" value="4" min="1"></div>
+                    <div class="setting-item"><label>Время убалтывания (сек):</label><input type="number" id="retain-prep-time" value="5" min="1"></div>
+                    <div class="setting-item"><label>КД убалтывания (сек):</label><input type="number" id="retain-ability-cooldown" value="10" min="0"></div>
+                </div>
+            </div>
+            <div class="column">
+                <h3>Настройки гостей</h3>
+                <div class="guest-class-settings">
+                    <h3>Нищий</h3>
+                    <div class="setting-item-class">
+                        <label>Время пребывания (с): <input type="number" id="stay-time-poor" value="30" min="10"></label>
+                        <label>Макс. удержаний: <input type="number" id="max-retain-poor" value="0" min="0"></label>
+                        <label>Шанс появления (%): <input type="number" id="weight-poor" value="50" min="0"></label>
+                    </div>
+                    <h3>Средний класс</h3>
+                    <div class="setting-item-class">
+                        <label>Время пребывания (с): <input type="number" id="stay-time-middle" value="45" min="10"></label>
+                        <label>Макс. удержаний: <input type="number" id="max-retain-middle" value="1" min="0"></label>
+                        <label>Шанс появления (%): <input type="number" id="weight-middle" value="40" min="0"></label>
+                    </div>
+                    <h3>Бизнесмен</h3>
+                    <div class="setting-item-class">
+                        <label>Время пребывания (с): <input type="number" id="stay-time-business" value="60" min="10"></label>
+                        <label>Макс. удержаний: <input type="number" id="max-retain-business" value="2" min="0"></label>
+                        <label>Шанс появления (%): <input type="number" id="weight-business" value="10" min="0"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <h3>Настройки заказов бара</h3>
+                <div class="settings-order-details">
+                    <div class="setting-item-order"><span>🍷:</span><label>Время: <input type="number" id="prep-drink-red" value="2" min="0.5" step="0.5"> с</label><label>Цена: <input type="number" id="price-drink-red" value="100" min="0"> $</label></div>
+                    <div class="setting-item-order"><span>🍹:</span><label>Время: <input type="number" id="prep-drink-blue" value="2.5" min="0.5" step="0.5"> с</label><label>Цена: <input type="number" id="price-drink-blue" value="150" min="0"> $</label></div>
+                    <div class="setting-item-order"><span>🍸:</span><label>Время: <input type="number" id="prep-drink-green" value="3" min="0.5" step="0.5"> с</label><label>Цена: <input type="number" id="price-drink-green" value="200" min="0"> $</label></div>
+                    <div class="setting-item-order"><span>🍺:</span><label>Время: <input type="number" id="prep-drink-yellow" value="3.5" min="0.5" step="0.5"> с</label><label>Цена: <input type="number" id="price-drink-yellow" value="250" min="0"> $</label></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="log-container">
+        <h3>Логи Игры</h3>
+        <div id="log-output"></div>
+    </div>
+    
+    <script src="config.js" type="module"></script>
+    <script src="gameLogic.js" type="module"></script>
+    <script src="main.js" type="module"></script>
+</body>
+</html>
